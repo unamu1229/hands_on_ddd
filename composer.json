@@ -1,0 +1,12 @@
+{
+    "name": "root/hands_on",
+    "require": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Domain\\": "Domain/",
+            "Tests\\": "tests"
+        }
+    }
+}
