@@ -4,17 +4,21 @@
 namespace Domain\Model\Entity;
 
 
+use Domain\Exception\DomainException;
 use Domain\Model\ValueObject\ParkingId;
 use Domain\Model\ValueObject\ParkingPrice;
 
 class Parking
 {
+
     private $id;
 
     private $name;
 
+    /** @var ParkingPrice */
     private $priceDay;
 
+    /** @var ParkingPrice */
     private $priceTime;
 
     public function __construct(ParkingId $parkingId)
@@ -25,40 +29,36 @@ class Parking
     public function setId(ParkingId $parkingId)
     {
         if ($this->id != null) {
-            throw new \InvalidArgumentException('すでに識別子が設定されています');
+            throw new DomainException('すでに識別子が設定されています');
         }
 
         $this->id = $parkingId;
     }
 
+
     /**
-     * @param mixed $priceDay
+     * @param ParkingPrice $parkingPrice
      */
     public function setPriceDay(ParkingPrice $parkingPrice): void
     {
         $this->priceDay = $parkingPrice;
     }
 
+
     /**
-     * @param mixed $priceTime
+     * @param ParkingPrice $priceTime
      */
     public function setPriceTime(ParkingPrice $priceTime): void
     {
-        if ($this->priceDay != null) {
-            throw new \InvalidArgumentException('まずは、日貸し料金を設定してください');
+        if ($this->priceDay == null) {
+            throw new DomainException('日貸し料金を設定しないと、時間貸しの料金は設定できません');
         }
 
-        if (($priceTime->getPrice() * 4 * 12) > $this->priceDay->getPrice) {
-            throw new \InvalidArgumentException('日貸で借りた方が得な値にしてください');
+        if (($priceTime->getPrice() * 4 * 12) > $this->priceDay->getPrice()) {
+            throw new DomainException('日貸で借りた方が得な値にしてください');
         }
 
         $this->priceTime = $priceTime;
     }
-
-
-
-
-
-
 
 }
