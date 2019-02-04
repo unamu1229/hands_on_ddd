@@ -7,6 +7,7 @@ namespace Domain\Model\Entity;
 use Domain\Exception\DomainException;
 use Domain\Model\ValueObject\ParkingId;
 use Domain\Model\ValueObject\ParkingPrice;
+use Domain\Model\ValueObject\ParkingSpaceId;
 
 class Parking
 {
@@ -20,6 +21,11 @@ class Parking
 
     /** @var ParkingPrice */
     private $priceTime;
+
+    private $canUse;
+
+    private $status;
+
 
     public function __construct(ParkingId $parkingId)
     {
@@ -60,5 +66,45 @@ class Parking
 
         $this->priceTime = $priceTime;
     }
+
+
+    public function parkingSpace(ParkingSpaceId $id)
+    {
+        return new ParkingSpace($id, $this->id);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCanUse()
+    {
+        return $this->canUse;
+    }
+
+    /**
+     * @param mixed $canUse
+     */
+    public function setCanUse($canUse): void
+    {
+        $this->canUse = $canUse;
+    }
+
+
 
 }

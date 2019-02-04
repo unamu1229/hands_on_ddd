@@ -6,6 +6,7 @@
     "autoload": {
         "psr-4": {
             "Domain\\": "Domain/",
+            "App\\": "app/",
             "Tests\\": "tests"
         }
     }
