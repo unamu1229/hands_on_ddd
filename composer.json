@@ -1,7 +1,8 @@
 {
     "name": "root/hands_on",
     "require": {
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^7.5",
+        "mockery/mockery": "^1.2"
     },
     "autoload": {
         "psr-4": {

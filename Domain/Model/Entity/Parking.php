@@ -9,6 +9,7 @@ use Domain\Model\ValueObject\ParkingAvailable;
 use Domain\Model\ValueObject\ParkingId;
 use Domain\Model\ValueObject\ParkingPrice;
 use Domain\Model\ValueObject\ParkingSpaceId;
+use Domain\Model\ValueObject\ParkingStatus;
 
 class Parking
 {
@@ -26,6 +27,7 @@ class Parking
     /** @var ParkingAvailable */
     private $parkingAvailable;
 
+    /** @var ParkingStatus */
     private $status;
 
 
@@ -51,6 +53,10 @@ class Parking
         return $this->id;
     }
 
+    public function priceDay()
+    {
+        return $this->priceDay->getPrice();
+    }
 
     /**
      * @param ParkingPrice $parkingPrice
@@ -113,6 +119,18 @@ class Parking
         $this->parkingAvailable = $parkingAvailable;
     }
 
+    /**
+     * @param mixed $status
+     */
+    public function setStatus(ParkingStatus $status): void
+    {
+        $this->status = $status;
+    }
+
+    public function status()
+    {
+        return $this->status->getStatus();
+    }
 
 
 }

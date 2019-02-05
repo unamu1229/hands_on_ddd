@@ -6,6 +6,8 @@ namespace Domain\Service;
 
 use Domain\Model\Entity\Parking;
 use Domain\Model\ValueObject\ParkingAvailable;
+use Domain\Model\ValueObject\ParkingSpaceStatus;
+use Domain\Model\ValueObject\ParkingStatus;
 use Infrastructure\ParkingSpaceRepository;
 
 class ParkingState
@@ -20,8 +22,18 @@ class ParkingState
      */
     public static function parkingAvailable(Parking $parking, ParkingSpaceRepository $parkingSpaceRepository)
     {
-        $parkingSpace = $parkingSpaceRepository->findParkingSpace($parking->getId());
+        $parkingSpaces = $parkingSpaceRepository->findParkingSpace($parking->getId());
 
-        return new ParkingAvailable($parkingSpace, $parking);
+        if ($parking->status() != ParkingStatus::ACTIVE) {
+            return new ParkingAvailable(false);
+        }
+
+        foreach ($parkingSpaces as $parkingSpace) {
+            if ($parkingSpace->status() == ParkingSpaceStatus::ACTIVE) {
+                return new ParkingAvailable(true);
+            }
+        }
+
+        return new ParkingAvailable(false);
     }
 }

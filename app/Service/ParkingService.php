@@ -31,7 +31,7 @@ class ParkingService
         /** @var Parking[] $parkings */
         $parkings = $this->parkingRepository->all();
 
-        foreach ($parkings as &$parking) {
+        foreach ($parkings as $parking) {
             $parkingAvailable = ParkingState::parkingAvailable($parking, $this->parkingSpaceRepository);
             $parking->setParkingAvailable($parkingAvailable);
         }

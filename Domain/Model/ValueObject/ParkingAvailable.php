@@ -4,28 +4,20 @@
 namespace Domain\Model\ValueObject;
 
 
-use Domain\Model\Entity\Parking;
-use Domain\Model\Entity\ParkingSpace;
-
 class ParkingAvailable
 {
-    /** @var ParkingSpace[] */
-    private $parkingSpace;
+    private $isCanParking;
 
-    /** @var Parking */
-    private $parking;
-
-    public function __construct(array $parkingSpace, Parking $parking)
+    public function __construct($bool)
     {
-        $this->parkingSpace = $parkingSpace;
-        $this->parking = $parking;
+        $this->isCanParking = $bool;
     }
 
-    public function canParking()
+    /**
+     * @return mixed
+     */
+    public function getisCanParking()
     {
-        // $parkingSpaceや$parkingの条件から
-        // 利用可能か判断する。
-
-        return true;
+        return $this->isCanParking;
     }
 }
