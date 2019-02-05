@@ -6,18 +6,18 @@ namespace Domain\Model\ValueObject;
 
 class ParkingAvailable
 {
-    private $isCanParking;
+    private $canParking;
 
     public function __construct($bool)
     {
-        $this->isCanParking = $bool;
+        $this->canParking = $bool;
     }
 
     /**
      * @return mixed
      */
-    public function getisCanParking()
+    public function canParking()
     {
-        return $this->isCanParking;
+        return $this->canParking;
     }
 }

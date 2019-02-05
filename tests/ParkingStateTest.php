@@ -27,6 +27,6 @@ class ParkingStateTest extends TestCase
 
         $parkingAvailable = ParkingState::parkingAvailable($parking, $mock);
 
-        $this->assertTrue($parkingAvailable->getisCanParking());
+        $this->assertTrue($parkingAvailable->canParking());
     }
 }
