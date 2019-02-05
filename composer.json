@@ -7,6 +7,7 @@
         "psr-4": {
             "Domain\\": "Domain/",
             "App\\": "app/",
+            "Infrastructure\\": "infrastructure/",
             "Tests\\": "tests"
         }
     }

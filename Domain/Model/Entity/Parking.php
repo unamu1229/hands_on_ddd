@@ -5,6 +5,7 @@ namespace Domain\Model\Entity;
 
 
 use Domain\Exception\DomainException;
+use Domain\Model\ValueObject\ParkingAvailable;
 use Domain\Model\ValueObject\ParkingId;
 use Domain\Model\ValueObject\ParkingPrice;
 use Domain\Model\ValueObject\ParkingSpaceId;
@@ -22,7 +23,8 @@ class Parking
     /** @var ParkingPrice */
     private $priceTime;
 
-    private $canUse;
+    /** @var ParkingAvailable */
+    private $parkingAvailable;
 
     private $status;
 
@@ -39,6 +41,14 @@ class Parking
         }
 
         $this->id = $parkingId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
 
@@ -89,20 +99,18 @@ class Parking
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCanUse()
+
+    public function canParking(): bool
     {
-        return $this->canUse;
+        return $this->parkingAvailable->canParking();
     }
 
     /**
-     * @param mixed $canUse
+     * @param ParkingAvailable $parkingAvailable
      */
-    public function setCanUse($canUse): void
+    public function setParkingAvailable(ParkingAvailable $parkingAvailable): void
     {
-        $this->canUse = $canUse;
+        $this->parkingAvailable = $parkingAvailable;
     }
 
 

@@ -5,26 +5,37 @@ namespace App\Service;
 
 
 use Domain\Model\Entity\Parking;
-use Domain\Model\ValueObject\ParkingId;
-use Domain\Model\ValueObject\ParkingSpaceId;
-use Domain\Service\ParkingStateService;
+use Domain\Service\ParkingState;
+use Infrastructure\ParkingRepository;
+use Infrastructure\ParkingSpaceRepository;
 
 class ParkingService
 {
+
+    private $parkingRepository;
+    private $parkingSpaceRepository;
+
+    public function __construct(ParkingRepository $parkingRepository, ParkingSpaceRepository $parkingSpaceRepository)
+    {
+        $this->parkingRepository = $parkingRepository;
+        $this->parkingSpaceRepository = $parkingSpaceRepository;
+    }
+
+    /**
+     * 駐車場一覧ページで表示する駐車場エンティティを設定する
+     *
+     * @return Parking[]
+     */
     public function parkingList()
     {
-        $parkingData = parkingRepo->get();
+        /** @var Parking[] $parkings */
+        $parkings = $this->parkingRepository->all();
 
-        $parkingList = [];
-        foreach ($parkingData as $p) {
-            $parking = new Parking(new ParkingId($p->id));
-            $parking = ParkingStateService::canUse(
-                $parking,
-                [$parking->parkingSpace(new ParkingSpaceId($p->space_id))]
-            );
-            $parkingList[] = $parking;
+        foreach ($parkings as &$parking) {
+            $parkingAvailable = ParkingState::parkingAvailable($parking, $this->parkingSpaceRepository);
+            $parking->setParkingAvailable($parkingAvailable);
         }
 
-        return $parkingList;
+        return $parkings;
     }
 }
