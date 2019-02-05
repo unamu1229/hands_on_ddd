@@ -24,6 +24,7 @@ class ParkingServiceTest extends TestCase
         $mockParkingSpaceRepo = \Mockery::mock(ParkingSpaceRepository::class);
         $parkingSpace = new ParkingSpace(new ParkingSpaceId(uniqid()), $parking->getId());
         $parkingSpace->setStatus(new ParkingSpaceStatus(ParkingSpaceStatus::ACTIVE));
+        $mockParkingSpaceRepo->shouldReceive('set');
         $mockParkingSpaceRepo->shouldReceive('findParkingSpace')->with($parking->getId())
             ->andReturn([$parkingSpace]);
 
@@ -66,6 +67,7 @@ class ParkingServiceTest extends TestCase
 
 
         $mockParkingSpaceRepo = \Mockery::mock(ParkingSpaceRepository::class);
+        $mockParkingSpaceRepo->shouldReceive('set');
         $mockParkingSpaceRepo->shouldReceive('findParkingSpace')->andReturn($parkingSpaces);
 
         $mockParkingRepo = \Mockery::mock(ParkingRepository::class);

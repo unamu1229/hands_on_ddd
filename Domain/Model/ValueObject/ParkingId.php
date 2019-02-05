@@ -15,6 +15,6 @@ class ParkingId
 
     public function getId()
     {
-        $this->id;
+        return $this->id;
     }
 }
