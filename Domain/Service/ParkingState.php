@@ -8,6 +8,7 @@ use Domain\Model\Entity\Parking;
 use Domain\Model\ValueObject\ParkingAvailable;
 use Domain\Model\ValueObject\ParkingSpaceStatus;
 use Domain\Model\ValueObject\ParkingStatus;
+use Domain\Repository\ParkingSpace;
 use Infrastructure\ParkingSpaceRepository;
 
 class ParkingState
@@ -17,10 +18,10 @@ class ParkingState
      * 駐車場が利用可能なのか
      *
      * @param Parking $parking
-     * @param ParkingSpaceRepository $parkingSpaceRepository
+     * @param ParkingSpace $parkingSpaceRepository
      * @return ParkingAvailable
      */
-    public static function parkingAvailable(Parking $parking, ParkingSpaceRepository $parkingSpaceRepository)
+    public static function parkingAvailable(Parking $parking, ParkingSpace $parkingSpaceRepository)
     {
         $parkingSpaces = $parkingSpaceRepository->findParkingSpace($parking->getId());
 
