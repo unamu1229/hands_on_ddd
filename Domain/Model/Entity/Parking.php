@@ -9,6 +9,7 @@ use Domain\Model\ValueObject\ParkingAvailable;
 use Domain\Model\ValueObject\ParkingId;
 use Domain\Model\ValueObject\ParkingPrice;
 use Domain\Model\ValueObject\ParkingSpaceId;
+use Domain\Model\ValueObject\ParkingSpaceStatus;
 use Domain\Model\ValueObject\ParkingStatus;
 
 class Parking
@@ -111,12 +112,20 @@ class Parking
         return $this->parkingAvailable->canParking();
     }
 
-    /**
-     * @param ParkingAvailable $parkingAvailable
-     */
-    public function setParkingAvailable(ParkingAvailable $parkingAvailable): void
+
+    public function setParkingAvailable(array $parkingSpaces): void
     {
-        $this->parkingAvailable = $parkingAvailable;
+        if ($this->status() != ParkingStatus::ACTIVE) {
+            $this->parkingAvailable = new ParkingAvailable(false);
+        }
+
+        foreach ($parkingSpaces as $parkingSpace) {
+            if ($parkingSpace->status() == ParkingSpaceStatus::ACTIVE) {
+                $this->parkingAvailable = new ParkingAvailable(true);
+            }
+        }
+
+        $this->parkingAvailable = new ParkingAvailable(false);
     }
 
     /**
